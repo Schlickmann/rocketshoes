@@ -1,8 +1,8 @@
 import produce from 'immer';
 
 export const Types = {
-  ADD_TO_CART: 'ADD_TO_CART',
-  REMOVE_FROM_CART: 'REMOVE_FROM_CART',
+  ADD_TO_CART: '@cart/ADD',
+  REMOVE_FROM_CART: '@cart/REMOVE',
 };
 
 export default function cart(state = [], action) {
