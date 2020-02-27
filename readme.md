@@ -1,6 +1,6 @@
 # Rocketshoes
 
-Fake shoes shop website. Project created with the purpose of playing around with ReactJS and Redux/Redux-Saga.
+Fake e-commerce website. Project created with the purpose of playing around with ReactJS and Redux/Redux-Saga.
 
 - [x] ReactJS;
 - [x] Redux;
