@@ -96,9 +96,4 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(CartActions, dispatch);
 
-Cart.propsType = {
-  cart: PropTypes.shape().isRequired,
-  removeFromCart: PropTypes.func.isRequired,
-};
-
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);
