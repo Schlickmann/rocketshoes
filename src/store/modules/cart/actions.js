@@ -1,9 +1,23 @@
 import { Types } from './reducer';
 
-export function addToCart(product) {
+export function addToCartRequest(id) {
   return {
-    type: Types.ADD_TO_CART,
+    type: Types.ADD_TO_CART_REQUEST,
+    id,
+  };
+}
+
+export function addToCartSuccess(product) {
+  return {
+    type: Types.ADD_TO_CART_SUCCESS,
     product,
+  };
+}
+
+export function addToCartFailure(error) {
+  return {
+    type: Types.ADD_TO_CART_FAILURE,
+    error,
   };
 }
 

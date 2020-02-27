@@ -1,14 +1,16 @@
 import produce from 'immer';
 
 export const Types = {
-  ADD_TO_CART: '@cart/ADD',
+  ADD_TO_CART_REQUEST: '@cart/ADD_REQUEST',
+  ADD_TO_CART_SUCCESS: '@cart/ADD_SUCCESS',
+  ADD_TO_CART_FAILURE: '@cart/ADD_FAILURE',
   REMOVE_FROM_CART: '@cart/REMOVE',
   UPDATE_AMOUNT_CART: '@cart/UPDATE',
 };
 
 export default function cart(state = [], action) {
   switch (action.type) {
-    case Types.ADD_TO_CART:
+    case Types.ADD_TO_CART_SUCCESS:
       return produce(state, draft => {
         const productIndex = draft.findIndex(p => p.id === action.product.id);
 
