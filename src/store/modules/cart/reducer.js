@@ -3,9 +3,9 @@ import produce from 'immer';
 export const Types = {
   ADD_TO_CART_REQUEST: '@cart/ADD_REQUEST',
   ADD_TO_CART_SUCCESS: '@cart/ADD_SUCCESS',
-  ADD_TO_CART_FAILURE: '@cart/ADD_FAILURE',
   REMOVE_FROM_CART: '@cart/REMOVE',
-  UPDATE_AMOUNT_CART: '@cart/UPDATE',
+  UPDATE_AMOUNT_CART_REQUEST: '@cart/UPDATE_REQUEST',
+  UPDATE_AMOUNT_CART_SUCCESS: '@cart/UPDATE_SUCCESS',
 };
 
 export default function cart(state = [], action) {
@@ -22,7 +22,7 @@ export default function cart(state = [], action) {
           draft.splice(productIndex, 1);
         }
       });
-    case Types.UPDATE_AMOUNT_CART: {
+    case Types.UPDATE_AMOUNT_CART_SUCCESS: {
       if (action.amount <= 0) {
         return state;
       }

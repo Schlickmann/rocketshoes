@@ -14,13 +14,6 @@ export function addToCartSuccess(product) {
   };
 }
 
-export function addToCartFailure(error) {
-  return {
-    type: Types.ADD_TO_CART_FAILURE,
-    error,
-  };
-}
-
 export function removeFromCart(id) {
   return {
     type: Types.REMOVE_FROM_CART,
@@ -28,9 +21,17 @@ export function removeFromCart(id) {
   };
 }
 
-export function updateAmount(id, amount) {
+export function updateAmountRequest(id, amount) {
   return {
-    type: Types.UPDATE_AMOUNT_CART,
+    type: Types.UPDATE_AMOUNT_CART_REQUEST,
+    id,
+    amount,
+  };
+}
+
+export function updateAmountSuccess(id, amount) {
+  return {
+    type: Types.UPDATE_AMOUNT_CART_SUCCESS,
     id,
     amount,
   };
