@@ -6,7 +6,7 @@ import { formatPrice } from '../../utils/format';
 import api from '../../services/api';
 
 import * as CartActions from '../../store/modules/cart/actions';
-import { ProductList } from './styles';
+import { Container, ProductList, Loading } from './styles';
 
 class Home extends Component {
   constructor(props) {
@@ -14,17 +14,19 @@ class Home extends Component {
 
     this.state = {
       products: [],
+      isLoading: false,
     };
   }
 
   async componentDidMount() {
+    this.setState({ isLoading: true });
     const response = await api.get('/products');
 
     const data = response.data.map(product => ({
       ...product,
       priceFormatted: formatPrice(product.price),
     }));
-    this.setState({ products: data });
+    this.setState({ products: data, isLoading: false });
   }
 
   handleAddItem = id => {
@@ -34,10 +36,14 @@ class Home extends Component {
   }
 
   render() {
-    const { products } = this.state;
+    const { products, isLoading } = this.state;
     const { amount } = this.props;
     return (
-      <ProductList>
+      <Container>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <ProductList>
         {products.map(product => (
           <li key={String(product.id)}>
             <img src={product.image} alt="" />
@@ -52,6 +58,8 @@ class Home extends Component {
           </li>
         ))}
       </ProductList>
+      )}
+      </Container>
     );
   }
 }
