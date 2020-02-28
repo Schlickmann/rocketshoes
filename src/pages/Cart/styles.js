@@ -93,3 +93,16 @@ export const Total = styled.div`
     margin-left: 5px;
   }
 `;
+
+export const TextEmptyCart = styled.tr`
+  td {
+    span {
+      font-family: Arial, Helvetica, sans-serif;
+      color: #666;
+      text-align: center;
+      text-transform: uppercase;
+      font-size: 24px;
+      padding: 1rem;
+    }
+  }
+`;
