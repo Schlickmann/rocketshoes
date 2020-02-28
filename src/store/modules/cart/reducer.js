@@ -23,9 +23,6 @@ export default function cart(state = [], action) {
         }
       });
     case Types.UPDATE_AMOUNT_CART_SUCCESS: {
-      if (action.amount <= 0) {
-        return state;
-      }
       return produce(state, draft => {
         const productIndex = draft.findIndex(p => p.id === action.id);
 

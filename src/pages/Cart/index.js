@@ -96,4 +96,20 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(CartActions, dispatch);
 
+Cart.propTypes = {
+  cart: PropTypes.arrayOf(
+    PropTypes.shape({
+      image: PropTypes.string,
+      title: PropTypes.string,
+      price: PropTypes.number,
+      priceFormatted: PropTypes.string,
+      subtotal: PropTypes.string,
+      map: PropTypes.func,
+    })
+  ).isRequired,
+  total: PropTypes.string.isRequired,
+  removeFromCart: PropTypes.func.isRequired,
+  updateAmountRequest: PropTypes.func.isRequired,
+};
+
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);

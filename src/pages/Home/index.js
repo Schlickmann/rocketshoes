@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { MdShoppingCart } from 'react-icons/md';
@@ -29,7 +30,7 @@ class Home extends Component {
     this.setState({ products: data, isLoading: false });
   }
 
-  handleAddItem = id => {
+  handleAddItem(id) {
     const { addToCartRequest } = this.props;
 
     addToCartRequest(id);
@@ -40,25 +41,29 @@ class Home extends Component {
     const { amount } = this.props;
     return (
       <Container>
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <ProductList>
-        {products.map(product => (
-          <li key={String(product.id)}>
-            <img src={product.image} alt="" />
-            <strong>{product.title}</strong>
-            <span>{product.priceFormatted}</span>
-            <button type="button" onClick={() => this.handleAddItem(product.id)}>
-              <div>
-                <MdShoppingCart size={16} color="#fff" /> {amount[product.id] || 0}
-              </div>
-              <span>ADD TO CART</span>
-            </button>
-          </li>
-        ))}
-      </ProductList>
-      )}
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <ProductList>
+            {products.map(product => (
+              <li key={String(product.id)}>
+                <img src={product.image} alt="" />
+                <strong>{product.title}</strong>
+                <span>{product.priceFormatted}</span>
+                <button
+                  type="button"
+                  onClick={() => this.handleAddItem(product.id)}
+                >
+                  <div>
+                    <MdShoppingCart size={16} color="#fff" />{' '}
+                    {amount[product.id] || 0}
+                  </div>
+                  <span>ADD TO CART</span>
+                </button>
+              </li>
+            ))}
+          </ProductList>
+        )}
       </Container>
     );
   }
@@ -72,6 +77,12 @@ const mapStateToProps = state => ({
   }, {}),
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(CartActions, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(CartActions, dispatch);
+
+Home.propTypes = {
+  amount: PropTypes.shape().isRequired,
+  addToCartRequest: PropTypes.func.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

@@ -25,6 +25,10 @@ function Header({ cart }) {
   );
 }
 
+Header.propTypes = {
+  cart: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+};
+
 export default connect(state => ({
   cart: state.cart,
 }))(Header);
