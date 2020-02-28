@@ -19,7 +19,7 @@ function* addToCart({ id }) {
   const amount = currentAmount + 1;
 
   if (amount > stockAmount) {
-    toast.error('Product run out of stock.');
+    toast.error('There is no more available unit of this product in stock.');
     return;
   }
 
@@ -46,7 +46,7 @@ function* updateAmount({ id, amount }) {
   const stockAmount = stock.data.amount;
 
   if (amount > stockAmount) {
-    toast.error('Product run out of stock.');
+    toast.error('There is no more available unit of this product in stock.');
     return;
   }
 
