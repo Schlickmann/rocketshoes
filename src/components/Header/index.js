@@ -1,13 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { MdShoppingBasket } from 'react-icons/md';
 
 import logo from '../../assets/images/logo.svg';
 import { Container, Cart } from './styles';
 
-function Header({ cart }) {
+function Header() {
+  const cart = useSelector(state => state.cart);
+
   return (
     <Container>
       <Link to="/">
@@ -25,10 +26,4 @@ function Header({ cart }) {
   );
 }
 
-Header.propTypes = {
-  cart: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-};
-
-export default connect(state => ({
-  cart: state.cart,
-}))(Header);
+export default Header;
