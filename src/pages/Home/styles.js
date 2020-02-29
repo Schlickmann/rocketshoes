@@ -6,8 +6,14 @@ export const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  /* width: 100%;
-  height: 100%; */
+  height: 100%;
+  max-width: 1020px;
+  margin: auto;
+  padding: 0 5rem;
+
+  @media (max-width: 768px) {
+    padding: 0 2rem;
+  }
 `;
 
 export const ProductList = styled.ul`
@@ -15,12 +21,14 @@ export const ProductList = styled.ul`
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 20px;
   list-style: none;
+  width: 100%;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1000px) {
+    height: 100%;
     grid-template-columns: repeat(2, 1fr);
   }
 
-  @media (max-width: 420px) {
+  @media (max-width: 440px) {
     grid-template-columns: repeat(1, 1fr);
   }
 
@@ -33,7 +41,7 @@ export const ProductList = styled.ul`
 
     img {
       align-self: center;
-      max-width: 250px;
+      max-width: 200px;
     }
 
     > strong {

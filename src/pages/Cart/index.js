@@ -10,7 +10,17 @@ import {
 
 import { formatPrice } from '../../utils/format';
 import * as CartActions from '../../store/modules/cart/actions';
-import { Container, ProductTable, Total, TextEmptyCart } from './styles';
+import {
+  Container,
+  Wrapper,
+  ProductTable,
+  ProductInfo,
+  ProductImage,
+  ProductTableBody,
+  ProductTitle,
+  Total,
+  TextEmptyCart,
+} from './styles';
 
 function Cart({ cart, total, removeFromCart, updateAmountRequest }) {
   function increment(product) {
@@ -23,68 +33,73 @@ function Cart({ cart, total, removeFromCart, updateAmountRequest }) {
 
   return (
     <Container>
-      <ProductTable>
-        <thead>
-          <tr>
-            <th />
-            <th>PRODUCT</th>
-            <th>QTD</th>
-            <th>SUBTOTAL</th>
-            <th />
-          </tr>
-        </thead>
-        <tbody>
-          {cart.length > 0 ? (
-            cart.map(product => (
-              <tr>
-                <td>
-                  <img src={product.image} alt={product.title} />
-                </td>
-                <td>
-                  <strong>{product.title}</strong>
-                  <span>{product.priceFormatted}</span>
-                </td>
-                <td>
+      <Wrapper>
+        <ProductTable>
+          <span>PRODUCTS LIST</span>
+          <ProductTableBody>
+            {cart.length > 0 ? (
+              cart.map(product => (
+                <div key={product.id}>
+                  <ProductImage>
+                    <img src={product.image} alt={product.title} />
+                  </ProductImage>
+                  <ProductInfo>
+                    <ProductTitle>
+                      <span>Name:</span>
+                      <strong>{product.title}</strong>
+                      <span>{product.priceFormatted}</span>
+                    </ProductTitle>
+                    <div>
+                      <span>Quantity:</span>
+                      <div>
+                        <button
+                          type="button"
+                          onClick={() => decrement(product)}
+                        >
+                          <MdRemoveCircleOutline size={20} color="#7159c1" />
+                        </button>
+                        <input type="number" readOnly value={product.amount} />
+                        <button
+                          type="button"
+                          onClick={() => increment(product)}
+                        >
+                          <MdAddCircleOutline size={20} color="#7159c1" />
+                        </button>
+                      </div>
+                    </div>
+                    <div>
+                      <span>Subtotal:</span>
+                      <strong>{product.subtotal}</strong>
+                    </div>
+                  </ProductInfo>
                   <div>
-                    <button type="button" onClick={() => decrement(product)}>
-                      <MdRemoveCircleOutline size={20} color="#7159c1" />
-                    </button>
-                    <input type="number" readOnly value={product.amount} />
-                    <button type="button" onClick={() => increment(product)}>
-                      <MdAddCircleOutline size={20} color="#7159c1" />
+                    <button
+                      type="button"
+                      onClick={() => removeFromCart(product.id)}
+                    >
+                      <MdDelete size={20} color="#7159c1" />
                     </button>
                   </div>
-                </td>
-                <td>
-                  <strong>{product.subtotal}</strong>
-                </td>
-                <td>
-                  <button
-                    type="button"
-                    onClick={() => removeFromCart(product.id)}
-                  >
-                    <MdDelete size={20} color="#7159c1" />
-                  </button>
-                </td>
-              </tr>
-            ))
-          ) : (
-            <TextEmptyCart>
-              <td colSpan={5}>
-                <span>Cart empty :(</span>
-              </td>
-            </TextEmptyCart>
-          )}
-        </tbody>
-      </ProductTable>
+                </div>
+              ))
+            ) : (
+              <TextEmptyCart>
+                <div colSpan={5}>
+                  <span>Cart empty :(</span>
+                </div>
+              </TextEmptyCart>
+            )}
+          </ProductTableBody>
+        </ProductTable>
 
-      <footer>
-        <button type="button">Check out</button>
-        <Total>
-          <span>TOTAL</span>
-          <strong>{total}</strong>
-        </Total>
-      </footer>
+        <footer>
+          <Total>
+            <span>TOTAL</span>
+            <strong>{total}</strong>
+          </Total>
+          <button type="button">Check out</button>
+        </footer>
+      </Wrapper>
     </Container>
   );
 }
