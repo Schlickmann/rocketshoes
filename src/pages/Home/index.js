@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -9,64 +9,56 @@ import api from '../../services/api';
 import * as CartActions from '../../store/modules/cart/actions';
 import { Container, ProductList, Loading } from './styles';
 
-class Home extends Component {
-  constructor(props) {
-    super(props);
+function Home({ addToCartRequest, amount }) {
+  const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-    this.state = {
-      products: [],
-      isLoading: false,
-    };
-  }
+  useEffect(() => {
+    async function loadProducts() {
+      setIsLoading(true);
 
-  async componentDidMount() {
-    this.setState({ isLoading: true });
-    const response = await api.get('/products');
+      const response = await api.get('/products');
 
-    const data = response.data.map(product => ({
-      ...product,
-      priceFormatted: formatPrice(product.price),
-    }));
-    this.setState({ products: data, isLoading: false });
-  }
+      const data = response.data.map(product => ({
+        ...product,
+        priceFormatted: formatPrice(product.price),
+      }));
 
-  handleAddItem(id) {
-    const { addToCartRequest } = this.props;
+      setProducts(data);
+      setIsLoading(false);
+    }
 
+    loadProducts();
+  }, []);
+
+  function handleAddItem(id) {
     addToCartRequest(id);
   }
 
-  render() {
-    const { products, isLoading } = this.state;
-    const { amount } = this.props;
-    return (
-      <Container>
-        {isLoading ? (
-          <Loading />
-        ) : (
-          <ProductList>
-            {products.map(product => (
-              <li key={String(product.id)}>
-                <img src={product.image} alt="" />
-                <strong>{product.title}</strong>
-                <span>{product.priceFormatted}</span>
-                <button
-                  type="button"
-                  onClick={() => this.handleAddItem(product.id)}
-                >
-                  <div>
-                    <MdShoppingCart size={16} color="#fff" />{' '}
-                    {amount[product.id] || 0}
-                  </div>
-                  <span>ADD TO CART</span>
-                </button>
-              </li>
-            ))}
-          </ProductList>
-        )}
-      </Container>
-    );
-  }
+  return (
+    <Container>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <ProductList>
+          {products.map(product => (
+            <li key={String(product.id)}>
+              <img src={product.image} alt="" />
+              <strong>{product.title}</strong>
+              <span>{product.priceFormatted}</span>
+              <button type="button" onClick={() => handleAddItem(product.id)}>
+                <div>
+                  <MdShoppingCart size={16} color="#fff" />{' '}
+                  {amount[product.id] || 0}
+                </div>
+                <span>ADD TO CART</span>
+              </button>
+            </li>
+          ))}
+        </ProductList>
+      )}
+    </Container>
+  );
 }
 
 const mapStateToProps = state => ({

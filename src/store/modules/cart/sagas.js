@@ -36,7 +36,7 @@ function* addToCart({ id }) {
     };
 
     yield put(addToCartSuccess(data));
-    history.push('/cart');
+    // history.push('/cart');
   }
 }
 
